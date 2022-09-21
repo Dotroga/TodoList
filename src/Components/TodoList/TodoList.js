@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const TodoList = ({todo, setTodo}) => {
+    const [edit, setEdit] = useState(null)
+    const [value, setValue] = useState('')
     const deleteTodo = (id) => {
         let newTodo = [...todo].filter(i => i.id !== id)
         setTodo(newTodo)
@@ -14,19 +16,45 @@ const TodoList = ({todo, setTodo}) => {
         })
         setTodo(newTodo)
     }
-    return(
+    const editTodo = (id, title) => {
+        setEdit(id)
+        setValue(title)
+    }
+    const saveTodo = (id) => {
+        let newTodo = [...todo].map(i => {
+            if (i.id === id) {
+                i.title = value
+            }
+            return i
+        })
+        setTodo(newTodo)
+        setEdit(null)
+    }
+    return (
         <div>
-            {
-                todo.map(i =>(
-                    <div key={i.id}>{i.title}
-                        <button onClick={ () => deleteTodo(i.id)}>Удалить</button>
-                        <span>
-                             { i.status === true
-                             ? <button onClick={ () => statusTodo(i.id)}>Зыкрыть</button>
-                             : <button onClick={ () => statusTodo(i.id)}>Открыть</button>}
-                        </span>
-                    </div>
-                ))
+            {todo.map(i => (
+                <div key={i.id}>
+                    {edit === i.id ?
+                        <div>
+                            <input value={value} onChange={(e)=> setValue(e.target.value)}/>
+                        </div>
+                        : <div>{i.title}</div>}
+                    {edit === i.id ?
+                        <div>
+                            <button onClick={() => saveTodo(i.id)}>Save</button>
+                        </div> :
+                        <div>
+                            <button onClick={() => editTodo(i.id, i.title)}>Edit</button>
+                            <span>
+                             {i.status === true
+                                 ? <button onClick={() => statusTodo(i.id)}>Close</button>
+                                 : <button onClick={() => statusTodo(i.id)}>Open</button>}
+                            </span>
+                            <button onClick={() => deleteTodo(i.id)}>Delete</button>
+                        </div>
+                    }
+                </div>
+            ))
             }
         </div>
     )

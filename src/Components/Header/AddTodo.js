@@ -15,8 +15,8 @@ const AddTodo = ({todo, setTodo}) => {
     }
     return(
         <div>
-            <input placeholder={'Введите задачу'} value={value} onChange={ (e)=> setValue(e.target.value)}/>
-            <button onClick={saveTodo}>Сохранить</button>
+            <input placeholder={'Enter the task'} value={value} onChange={ (e)=> setValue(e.target.value)}/>
+            <button onClick={saveTodo}>Save</button>
         </div>
     )
 }
