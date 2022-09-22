@@ -3,6 +3,7 @@ import './App.css';
 import Header from "./Components/AddTodo/Header";
 import AddTodo from "./Components/Header/AddTodo";
 import TodoList from "./Components/TodoList/TodoList";
+import SortingTodo from "./Components/SortingTodo/SortingTodo";
 
 function App() {
     const [todo, setTodo] = useState([
@@ -25,7 +26,7 @@ function App() {
   return (<div>
         <Header/>
         <AddTodo todo={todo} setTodo={setTodo}/>
-        <TodoList todo={todo} setTodo={setTodo}/>
+        <SortingTodo todo={todo} setTodo={setTodo} />
   </div>)
 }
 
