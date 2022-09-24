@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const TodoList = ({todo, setTodo}) => {
+const TodoList = ({todo, setTodo, newTodo}) => {
     const [edit, setEdit] = useState(null)
     const [value, setValue] = useState('')
     const deleteTodo = (id) => {
@@ -32,18 +32,14 @@ const TodoList = ({todo, setTodo}) => {
     }
     return (
         <div>
-            {todo.map(i => (
+            {newTodo.map(i => (
                 <div key={i.id}>
-                    {edit === i.id ?
-                        <div>
-                            <input value={value} onChange={(e)=> setValue(e.target.value)}/>
-                        </div>
-                        : <div>{i.title}</div>}
-                    {edit === i.id ?
-                        <div>
-                            <button onClick={() => saveTodo(i.id)}>Save</button>
-                        </div> :
-                        <div>
+                    {edit === i.id
+                        ? <input value={value} onChange={(e)=> setValue(e.target.value)}/>
+                        : <span>{i.title}</span>}
+                    {edit === i.id
+                        ? <button onClick={() => saveTodo(i.id)}>Save</button>
+                        : <span>
                             <button onClick={() => editTodo(i.id, i.title)}>Edit</button>
                             <span>
                              {i.status === true
@@ -51,13 +47,9 @@ const TodoList = ({todo, setTodo}) => {
                                  : <button onClick={() => statusTodo(i.id)}>Open</button>}
                             </span>
                             <button onClick={() => deleteTodo(i.id)}>Delete</button>
-                        </div>
-                    }
-                </div>
-            ))
-            }
-        </div>
-    )
+                        </span>}
+                </div>))}
+        </div>)
 }
 
 export default  TodoList
